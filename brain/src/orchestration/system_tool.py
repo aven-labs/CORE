@@ -247,14 +247,14 @@ async def _execute_with_token(user_intent: str) -> str:
                         device_response = await send_intent(
                             device_id=_device_id,
                             action=action,
-                            data={"tool_id": tool_id, "agent_id": tool_id, "user_intent": user_intent},
+                            data={"tool_id": tool_id,"user_intent": user_intent},
                             wait_for_response=True,
                             timeout=100.0,
                             auth_token=_access_token
                         )
                         if device_response:
                             logger.info(f"Received response from local agent '{agent_name}'")
-                            return json.dumps(device_response) if isinstance(device_response, dict) else str(device_response)
+                            return f"[Tool:{tool_id}]: {json.dumps(device_response) if isinstance(device_response, dict) else str(device_response)}"
                         else:
                             logger.warning(f"No response received from local agent '{agent_name}'")
                             return f"Action '{action}' sent to local agent {agent_name}, but no response received."
