@@ -4,8 +4,8 @@ Chat processing service for the Aven Speech API
 import logging
 import json
 from flask import request, jsonify, Response, stream_with_context
-from orchestration.orchestrator import AgentOrchestrator
-from memory.memory_manager import MemoryManager
+from brain.src.orchestration.orchestrator import AgentOrchestrator
+from brain.src.memory.memory_manager import MemoryManager
 
 logger = logging.getLogger(__name__)
 

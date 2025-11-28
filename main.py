@@ -3,7 +3,9 @@ import os
 import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from core.chat_service import ChatService
 
+# region Configuration and Setup
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -40,7 +42,7 @@ from core.auth_service import require_auth
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-
+# endregion
 
 @app.route('/health', methods=['GET'])
 def health_check_endpoint():
@@ -59,7 +61,7 @@ def chat_stream_endpoint():
         user_id = request.user_id
         access_token = request.access_token
         logger.info(f"Chat stream request from user: {user_id}")
-        return chat_service.process_chat_stream(user_id, access_token)
+        return ChatService().process_chat_stream(user_id, access_token)
     except Exception as e:
         logger.error(f"Chat stream failed for user {request.user_id}: {e}", exc_info=True)
         return jsonify({"error": "Chat streaming failed"}), 500
@@ -90,6 +92,4 @@ def internal_error(error):
 
 if __name__ == '__main__':
     logger.info("Starting Aven Speech API server...")
-    # For production, use a proper WSGI server like gunicorn
-    # Development only: app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
     app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)

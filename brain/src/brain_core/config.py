@@ -16,10 +16,6 @@ class Config:
     AZURE_OPENAI_ENDPOINT: str = os.getenv(
         "AZURE_OPENAI_ENDPOINT", "")
         
-    AZURE_OPENAI_API_VERSION: str = os.getenv(
-        "OPENAI_API_VERSION", "")
-    AZURE_OPENAI_DEPLOYMENT: str = os.getenv(
-        "AZURE_OPENAI_DEPLOYMENT", "")
     AZURE_OPENAI_EMBEDDING_DEPLOYMENT: str = os.getenv(
         "AZURE_OPENAI_EMBEDDING_DEPLOYMENT", "")
 
@@ -44,20 +40,20 @@ class Config:
             "config_list": [
                 {
                     "model": "gpt-4o",
-                    "api_version": "2024-12-01-preview",
+                    "api_version": "2024-11-20",
                     "temprature": 0,
                     "api_key": cls.OPENAI_API_KEY,
                     "azure_endpoint": cls.AZURE_OPENAI_ENDPOINT
                 },
                 {
                     "model": "o3-mini",
-                    "api_version": "2024-12-01-preview",
+                    "api_version": "2024-11-20",
                     "api_key": cls.OPENAI_API_KEY,
                 },
                 {
                     "model": "gpt-4o",
                     "temprature": 1,
-                    "api_version": "2024-12-01-preview",
+                    "api_version": "2024-11-20",
                     "api_key": cls.OPENAI_API_KEY,
                     "azure_endpoint": cls.AZURE_OPENAI_ENDPOINT
                 }

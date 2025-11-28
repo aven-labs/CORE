@@ -4,7 +4,7 @@ Supabase authentication service for token verification and user details
 import logging
 from functools import wraps
 from flask import request, jsonify
-from brain_core.sup_extractor import supabase_service
+from brain.src.brain_core.sup_extractor import supabase_service
 
 logger = logging.getLogger(__name__)
 

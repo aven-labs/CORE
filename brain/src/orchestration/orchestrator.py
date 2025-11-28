@@ -1,9 +1,18 @@
 import asyncio
 import logging
+import os
+import sys
 from typing import AsyncGenerator
 from queue import Queue, Empty
 import threading
 import warnings
+
+# Add brain/src directory to path for imports
+current_dir = os.path.dirname(os.path.abspath(__file__))
+brain_src_path = os.path.dirname(current_dir)  # Go up from orchestration/ to src/
+brain_src_path = os.path.abspath(brain_src_path)
+if brain_src_path not in sys.path:
+    sys.path.insert(0, brain_src_path)
 
 from autogen_core import CancellationToken
 from agents.mcp_agent import MCPAgent
