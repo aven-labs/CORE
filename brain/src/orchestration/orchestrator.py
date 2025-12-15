@@ -52,6 +52,8 @@ class AgentOrchestrator:
     async def _load_chat_history(self, message: str) -> str:
         """Load previous messages from memory into model context."""
         context_string, previous_messages = self.memory.get_messages(message)
+        print(f"Context: {context_string}")
+        print(f"Previous messages: {previous_messages}")
         for msg in previous_messages:
             await self.model_context.add_message(msg)
         return context_string
@@ -129,11 +131,15 @@ class AgentOrchestrator:
             
             # Step 1: Load previous conversation
             context = await self._load_chat_history(task)
+            # Enrich context with the current date and time (UTC)
+            current_datetime_utc = datetime.utcnow().isoformat() + "Z"
+            context_with_time = f"{context}\n\nCurrent datetime (UTC): {current_datetime_utc}"
+
             # Step 2: Add user message to context
             await self.model_context.add_message(UserMessage(content=task, source="user"))
 
             # Step 3: Create assistant with tool access and streaming enabled
-            assistant = self._create_assistant(context, enable_streaming=True)
+            assistant = self._create_assistant(context_with_time, enable_streaming=True)
 
             # Step 4: Stream the assistant response
             cancellation_token = CancellationToken()
